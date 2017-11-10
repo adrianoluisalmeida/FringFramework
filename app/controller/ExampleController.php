@@ -19,14 +19,15 @@ class ExampleController extends Controller
 
     }
 
-    public function create(){
+    public function create()
+    {
         $this->setView('example/create.html');
-
-//        var_dump( $this->getContext());
+        var_dump('<pre>', $this->getContext(), '</pre>');
         return $this->twig->render($this->getView(), $this->getContext());
     }
 
-    public function store(){
+    public function store()
+    {
 
         $request = Request::all($this->validations());
 
@@ -35,14 +36,24 @@ class ExampleController extends Controller
         $example->email = $request->email;
         $example->phone = $request->phone;
 
+        $example->save();
 
-        if (!$example->save()) {
-            return;
-        }
+        $this->redirect($this->getContext()['base_url'] . '/example');
+    }
+
+    public function destroy()
+    {
+        $id = Request::getParam('id');
+        $example = new Example();
+        $example->id = $id;
+        $example->delete();
+
+        $this->redirect($this->getContext()['base_url'] . '/example');
 
     }
 
-    public function validations(){
+    public function validations()
+    {
         return [
             'name',
             'email',
