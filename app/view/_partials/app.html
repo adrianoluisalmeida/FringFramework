@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %} - Fring Framework</title>
+    {% for script in scripts %}
+    <script src="scripts/{{ script }}" type="text/javascript"></script>
+    {% endfor %}
+
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+</head>
+<body>
+
+<div id="mainwrapper">
+    <div id="main">
+        {% block main %}{% endblock %}
+    </div>
+    <div id="clearfix"></div>
+</div>
+<div id="footer">
+    <p><strong>Fring Framework (C) 2017</strong></p>
+</div>
+</body>
+</html>
