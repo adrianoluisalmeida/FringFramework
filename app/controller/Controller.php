@@ -25,6 +25,15 @@ abstract class Controller
         ]);
 //        $this->twig->addFunction($assetsFunction);
         $this->twig->setCache(false);
+
+
+        $host = $_SERVER['HTTP_HOST'];
+        $host_upper = strtoupper($host);
+        $path = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+        $baseurl = "http://" . $host . $path;
+
+        $this->templateContext['base_url'] = $baseurl;
+
     }
 
     /**
@@ -67,6 +76,8 @@ abstract class Controller
      */
     public function addToView($name, $value)
     {
+
+
         $this->templateContext[$name] = $value;
     }
 

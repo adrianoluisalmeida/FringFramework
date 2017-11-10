@@ -6,7 +6,7 @@
  * Time: 02:10
  */
 
-abstract class ModelMDB
+abstract class ModelMDB extends ModelRegister implements InterfaceModelMDB
 {
     private static $db;
     private $fields = array();
@@ -29,8 +29,6 @@ abstract class ModelMDB
 
         }
     }
-
-
 
     /**
      * @return mixed

@@ -6,7 +6,7 @@
  * Time: 01:07
  */
 
-abstract class ModelPDO
+abstract class ModelPDO extends ModelRegister implements InterfaceModelPDO
 {
 
     private static $pdo;
@@ -19,7 +19,7 @@ abstract class ModelPDO
             $database = include(ROOT . 'app/config/database.php');
 
             self::$pdo = new PDO(
-                $database['dbdrive'] . ':dbname='.$database['dbname'].';host=' . $database['hostname'],
+                $database['dbdrive'] . ':dbname=' . $database['dbname'] . ';host=' . $database['hostname'],
                 $database['username'],
                 $database['passwd']
             );
