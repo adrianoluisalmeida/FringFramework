@@ -5,9 +5,13 @@
 {% block main %}
 
 <div class="col-md-8 col-md-offset-2">
-    <form action="{{ base_url }}/example/store" method="post" name="register">
+    <form action="{{ base_url }}/example/update" method="post" name="register">
+
+        <input name="id" type="hidden" value="{{ example.id }}"/>
+
         {% include 'example/form.html' %}
     </form>
 </div>
+
 
 {% endblock %}

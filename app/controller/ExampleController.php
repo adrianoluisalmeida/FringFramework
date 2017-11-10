@@ -14,21 +14,26 @@ class ExampleController extends Controller
         $this->setView('example/main.html');
         $this->addToView('examples', Example::getAll());
 
-//        var_dump( $this->getContext());
         return $this->twig->render($this->getView(), $this->getContext());
-
     }
 
     public function create()
     {
         $this->setView('example/create.html');
-        var_dump('<pre>', $this->getContext(), '</pre>');
+        return $this->twig->render($this->getView(), $this->getContext());
+    }
+
+    public function edit()
+    {
+        $id = Request::getParam('id');
+        $this->setView('example/edit.html');
+        $this->addToView('example', Example::get($id));
+
         return $this->twig->render($this->getView(), $this->getContext());
     }
 
     public function store()
     {
-
         $request = Request::all($this->validations());
 
         $example = new Example();
@@ -37,6 +42,21 @@ class ExampleController extends Controller
         $example->phone = $request->phone;
 
         $example->save();
+
+        $this->redirect($this->getContext()['base_url'] . '/example');
+    }
+
+    public function update()
+    {
+        $id = Request::getPost("id");
+        $request = Request::all($this->validations());
+
+        $example = new Example();
+        $example->name = $request->name;
+        $example->email = $request->email;
+        $example->phone = $request->phone;
+
+        $example->save(["id" => $id]);
 
         $this->redirect($this->getContext()['base_url'] . '/example');
     }

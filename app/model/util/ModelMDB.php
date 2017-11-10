@@ -58,6 +58,11 @@ abstract class ModelMDB extends ModelRegister implements InterfaceModelMDB
         return "{$field}";
     }
 
+    public static function get($id)
+    {
+        return self::getAllBy(array('id' => $id));
+    }
+
     /**
      * @return mixed
      */
@@ -67,18 +72,19 @@ abstract class ModelMDB extends ModelRegister implements InterfaceModelMDB
         $modelName = self::getModelName();
         $collection = self::$db->$modelName;
 
-        if(count($update) > 0){
+        if (count($update) > 0) {
 
             $dataUpdate = [];
             foreach ($this->fields as $field => $f) {
                 if ($field != 'id' && $f != NULL) {
-                    if(!empty($f))
+                    if (!empty($f))
                         $dataUpdate[self::getFieldName($field)] = self::getBindName($f);
                 }
             }
-            $collection->update($update, array('$set'=>$dataUpdate));
+            $collection->update($update, array('$set' => $dataUpdate));
 
-        }else{
+        } else {
+            $this->fields['id'] = 1;
             return $collection->insert($this->fields);
         }
 
@@ -88,14 +94,15 @@ abstract class ModelMDB extends ModelRegister implements InterfaceModelMDB
     /**
      * Delete register Collection
      */
-    public function delete(){
+    public function delete()
+    {
         self::getPDO();
         $modelName = self::getModelName();
         $collection = self::$db->$modelName;
 
         $data = [];
         foreach ($this->fields as $key => $f) {
-            if(!empty($f))
+            if (!empty($f))
                 $data[$key] = $f;
         }
 
@@ -127,10 +134,12 @@ abstract class ModelMDB extends ModelRegister implements InterfaceModelMDB
         self::getPDO();
         $modelName = self::getModelName();
         $collection = self::$db->$modelName;
-        $cursor = $collection->find();
 
-
-        $document = [];
+        if (is_null($where))
+            $cursor = $collection->find();
+        else
+            $cursor = $collection->find($where);
+            $document = [];
         foreach ($cursor as $key => $value) {
             $document[$key] = $value;
         }

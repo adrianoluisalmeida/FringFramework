@@ -1,17 +1,13 @@
-<div class="col-md-8 col-md-offset-2">
-    <form action="{{ base_url }}/example/store" method="post" name="register">
-        <div class="form-group">
-            <label>Nome:</label>
-            <input type="text" name="name" class="form-control">
-        </div>
-        <div class="form-group">
-            <label>E-mail:</label>
-            <input type="email" name="email" class="form-control">
-        </div>
-        <div class="form-group">
-            <label>Telefone:</label>
-            <input type="text" name="phone" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-primary pull-right">Enviar</button>
-    </form>
+<div class="form-group">
+    <label>Nome:</label>
+    <input type="text" name="name" value="{{ example.name }}" class="form-control">
 </div>
+<div class="form-group">
+    <label>E-mail:</label>
+    <input type="email" name="email" value="{{ example.email }}" class="form-control">
+</div>
+<div class="form-group">
+    <label>Telefone:</label>
+    <input type="text" name="phone" value="{{ example.phone }}" class="form-control">
+</div>
+<button type="submit" class="btn btn-primary pull-right">Enviar</button>

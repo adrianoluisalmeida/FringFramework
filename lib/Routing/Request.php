@@ -24,5 +24,9 @@ class Request
         return filter_input(INPUT_POST, $name, FILTER_SANITIZE_STRING);
     }
 
+    static public function getPost($name){
+        return self::sanitizeString($name);
+    }
+
 
 }
