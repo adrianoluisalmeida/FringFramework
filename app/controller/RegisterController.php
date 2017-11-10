@@ -6,13 +6,13 @@
  * Time: 21:47
  */
 
-class HomeController extends Controller
+class RegisterController extends Controller
 {
 
     public function main()
     {
-        $this->setView('home.html');
-        $this->addToView('teste', 'teste');
+        $this->setView('register/main.html');
+//        $this->addToView('teste', 'teste');
 
         return $this->twig->render($this->getView(), $this->getContext());
 

@@ -6,12 +6,12 @@
  * Time: 21:47
  */
 
-class HomeController extends Controller
+class AboutController extends Controller
 {
 
     public function main()
     {
-        $this->setView('home.html');
+        $this->setView('about/main.html');
         $this->addToView('teste', 'teste');
 
         return $this->twig->render($this->getView(), $this->getContext());
