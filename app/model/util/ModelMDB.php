@@ -60,7 +60,7 @@ abstract class ModelMDB extends ModelRegister implements InterfaceModelMDB
 
     public static function get($id)
     {
-        return self::getAllBy(array('id' => $id));
+        return self::getAllBy(array('id' => (int)$id));
     }
 
     /**
@@ -71,6 +71,9 @@ abstract class ModelMDB extends ModelRegister implements InterfaceModelMDB
         self::getPDO();
         $modelName = self::getModelName();
         $collection = self::$db->$modelName;
+
+        if(array_key_exists('id', $update))
+            $update['id'] = (int) $update['id'];
 
         if (count($update) > 0) {
 
@@ -101,12 +104,18 @@ abstract class ModelMDB extends ModelRegister implements InterfaceModelMDB
         $collection = self::$db->$modelName;
 
         $data = [];
+
         foreach ($this->fields as $key => $f) {
-            if (!empty($f))
-                $data[$key] = $f;
+            if (!is_null($f) ){
+                if($key == 'id')
+                    $data[$key] = (int) $f;
+                else
+                    $data[$key] = $f;
+            }
+
         }
 
-        $collection->remove($data);
+        return $collection->remove($data);
     }
 
     /**
@@ -139,12 +148,13 @@ abstract class ModelMDB extends ModelRegister implements InterfaceModelMDB
             $cursor = $collection->find();
         else
             $cursor = $collection->find($where);
-            $document = [];
+
+        $document = [];
         foreach ($cursor as $key => $value) {
             $document[$key] = $value;
         }
 
-        return $document;
+        return is_null($where) ? $document : $document[$key];
     }
 
 

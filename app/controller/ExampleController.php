@@ -14,6 +14,8 @@ class ExampleController extends Controller
         $this->setView('example/main.html');
         $this->addToView('examples', Example::getAll());
 
+
+
         return $this->twig->render($this->getView(), $this->getContext());
     }
 
@@ -28,6 +30,8 @@ class ExampleController extends Controller
         $id = Request::getParam('id');
         $this->setView('example/edit.html');
         $this->addToView('example', Example::get($id));
+
+//        var_dump('<pre>',Example::get((int)$id), '</pre>');
 
         return $this->twig->render($this->getView(), $this->getContext());
     }
@@ -66,6 +70,7 @@ class ExampleController extends Controller
         $id = Request::getParam('id');
         $example = new Example();
         $example->id = $id;
+
         $example->delete();
 
         $this->redirect($this->getContext()['base_url'] . '/example');
