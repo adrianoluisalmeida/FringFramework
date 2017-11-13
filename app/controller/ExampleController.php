@@ -14,8 +14,6 @@ class ExampleController extends Controller
         $this->setView('example/main.html');
         $this->addToView('examples', Example::getAll());
 
-
-
         return $this->twig->render($this->getView(), $this->getContext());
     }
 
