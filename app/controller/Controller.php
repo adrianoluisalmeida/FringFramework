@@ -12,7 +12,7 @@ abstract class Controller
     public $template;
     public $templateContext = [];
     public $errors = [];
-
+    protected $dao;
 
     public function __construct()
     {
@@ -23,7 +23,6 @@ abstract class Controller
             'cache' => 'lib/view/cache',
             'strict_variables' => false
         ]);
-//        $this->twig->addFunction($assetsFunction);
         $this->twig->setCache(false);
 
 
@@ -33,6 +32,10 @@ abstract class Controller
         $baseurl = "http://" . $host . $path;
 
         $this->templateContext['base_url'] = $baseurl;
+
+
+        $database = include(ROOT . 'app/config/database.php');
+        $this->dao = $database['dbdrive'] == "mysql" ? new PdoDAO : new MongoDAO;
 
     }
 

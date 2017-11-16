@@ -9,10 +9,19 @@
 class ExampleController extends Controller
 {
 
+    private $model;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->model = new Example();
+    }
+
     public function main()
     {
         $this->setView('example/main.html');
-        $this->addToView('examples', Example::getAll());
+        $example = new Example();
+        $this->addToView('examples', $this->dao->getAll($example));
 
         return $this->twig->render($this->getView(), $this->getContext());
     }
@@ -27,9 +36,9 @@ class ExampleController extends Controller
     {
         $id = Request::getParam('id');
         $this->setView('example/edit.html');
-        $this->addToView('example', Example::get($id));
-
-//        var_dump('<pre>',Example::get((int)$id), '</pre>');
+        $example = new Example();
+        $example->id = $id;
+        $this->addToView('example', $this->dao->get($example));
 
         return $this->twig->render($this->getView(), $this->getContext());
     }
@@ -39,11 +48,11 @@ class ExampleController extends Controller
         $request = Request::all($this->validations());
 
         $example = new Example();
-        $example->name = $request->name;
+        $example->name = "teste";
         $example->email = $request->email;
         $example->phone = $request->phone;
 
-        $example->save();
+        $this->dao->save($example);
 
         $this->redirect($this->getContext()['base_url'] . '/example');
     }
@@ -58,7 +67,7 @@ class ExampleController extends Controller
         $example->email = $request->email;
         $example->phone = $request->phone;
 
-        $example->save(["id" => $id]);
+        $this->dao->save($example, ["id" => $id]);
 
         $this->redirect($this->getContext()['base_url'] . '/example');
     }
@@ -69,8 +78,7 @@ class ExampleController extends Controller
         $example = new Example();
         $example->id = $id;
 
-        $example->delete();
-
+        $this->dao->delete($example);
         $this->redirect($this->getContext()['base_url'] . '/example');
 
     }
