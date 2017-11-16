@@ -61,7 +61,7 @@ class PdoDAO extends ModelRegister implements DAO
     private function getExecute($model, array $where = NULL)
     {
         $q = "SELECT * FROM {$model->table}";
-        $sth = self::prepareQuery($model, $q, NULL);
+        $sth = self::prepareQuery($model, $q, $where ? array(self::getModelName($model) => $where) : NULL);
         $sth->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, strtolower(get_class($model)));
         $sth->execute();
         return $sth;
