@@ -48,7 +48,7 @@ class MongoDAO extends ModelRegister implements DAO
 
     public function get($model)
     {
-        return self::getAllBy($model, array('id' => (int)$model->id));
+        return $this->getAllBy($model, array('id' => (int)$model->id));
     }
 
 
@@ -64,7 +64,7 @@ class MongoDAO extends ModelRegister implements DAO
      * @param array|NULL $where
      * @return array
      */
-    protected function getAllBy($model, array $where = NULL)
+    public function getAllBy($model, array $where = NULL)
     {
         self::getMongo();
         $modelName = $model->table;
