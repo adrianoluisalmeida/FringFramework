@@ -17,17 +17,15 @@ class ExampleController extends Controller
         $this->model = new Example();
     }
 
-    public function main()
-    {
-        $this->setView('example/main.html');
-        $example = new Example();
-        $this->addToView('examples', $this->dao->getAll($example));
+    public function main(){
+        $this->setView('example/main.html');//view
+        $example = new Example();//classe do model
+        $this->addToView('examples', $this->dao->getAll($example));//parametros que passam pra view + consulta
 
-        return $this->twig->render($this->getView(), $this->getContext());
+        return $this->twig->render($this->getView(), $this->getContext()); //une addToView + setView para exibir a view com os parametros
     }
 
-    public function create()
-    {
+    public function create(){
         $this->setView('example/create.html');
         return $this->twig->render($this->getView(), $this->getContext());
     }

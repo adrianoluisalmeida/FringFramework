@@ -6,14 +6,15 @@
  * Time: 03:08
  */
 
-$active_db = 'mongodb';
+$active_db = 'mysql'; //qual será a base usada mongodb ou mysql
+//$active_db = 'mongodb'; //qual será a base usada mongodb ou mysql
 
 $groups = [
-    'pdo' => [
+    'mysql' => [
         'dbdrive' => 'mysql',
         'hostname' => 'localhost',
         'username' => 'root',
-        'passwd' => '',
+        'passwd' => 'root',
         'dbname' => 'gbd'
     ],
     'mongodb' => [

@@ -208,13 +208,11 @@ class PdoDAO extends ModelRegister implements DAO
      * @param $id
      * @return mixed
      */
-    public function get($model)
-    {
+    public function get($model){
         return $this->getBy($model, array('id' => $model->id));
     }
 
-    protected function getBy($model, array $where = NULL)
-    {
+    protected function getBy($model, array $where = NULL){
         $sth = $this->getExecute($model, $where);
 
         $data = $sth->fetch();

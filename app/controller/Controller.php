@@ -14,8 +14,7 @@ abstract class Controller
     public $errors = [];
     protected $dao;
 
-    public function __construct()
-    {
+    public function __construct(){
         session_start();
         Twig_Autoloader::register();
         $loader = new Twig_Loader_Filesystem('app/view');
@@ -25,34 +24,27 @@ abstract class Controller
         ]);
         $this->twig->setCache(false);
 
-
         $host = $_SERVER['HTTP_HOST'];
         $host_upper = strtoupper($host);
         $path = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
         $baseurl = "http://" . $host . $path;
 
-        $this->templateContext['base_url'] = $baseurl;
-
+        $this->templateContext['base_url'] = $baseurl; //em qualquer view carrega a variavel $base_url
 
         $database = include(ROOT . 'app/config/database.php');
-        $this->dao = $database['dbdrive'] == "mysql" ? new PdoDAO : new MongoDAO;
-
+        $this->dao = $database['dbdrive'] == "mysql" ? new PdoDAO : new MongoDAO; //se é mysql usa o driver mysql, senao usa do mongodb
     }
 
     /**
      * Main default
      */
-    public function main()
-    {
-
-    }
+    public function main(){}
 
     /**
      * Add errors in application
      * @param $error
      */
-    public function addError($error)
-    {
+    public function addError($error){
         $this->errors[] = $error;
     }
 
@@ -61,13 +53,11 @@ abstract class Controller
      * Set the view current
      * @param $template
      */
-    public function setView($template)
-    {
-        $this->template = $template;
+    public function setView($template){
+        $this->template = $template; //adiciona template (view)
     }
 
-    public function getView()
-    {
+    public function getView(){
         return $this->template;
     }
 
@@ -77,15 +67,11 @@ abstract class Controller
      * @param $name
      * @param $value
      */
-    public function addToView($name, $value)
-    {
-
-
-        $this->templateContext[$name] = $value;
+    public function addToView($name, $value){
+        $this->templateContext[$name] = $value; //adiciona contexto igual compact do laravel
     }
 
-    public function getContext()
-    {
+    public function getContext(){
         return $this->templateContext;
     }
 
@@ -93,23 +79,7 @@ abstract class Controller
      * Redirect Pages
      * @param $page
      */
-    public function redirect($page)
-    {
-        header("Location: {$page}");
+    public function redirect($page){
+        header("Location: {$page}"); //redirect
     }
-
-
-//    public function render()
-//    {
-//        $this->main();
-//        if (!empty($this->errors)) {
-//            $this->addToView('errors', $this->errors);
-//
-//
-//        }
-//
-//        var_dump($this->template);
-//        die;
-//        return $this->template ? $this->twig->render($this->template, $this->templateContext) : '';
-//    }
 }

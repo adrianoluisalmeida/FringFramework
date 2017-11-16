@@ -1,0 +1,45 @@
+<h1>Listagem de Exemplo</h1>
+<hr/>
+<table class="table table-bordered">
+    <tr class="text-center">
+        <td>
+            <b>Nome</b>
+        </td>
+        <td>
+            <b>E-mail</b>
+        </td>
+        <td>
+            <b>Telefone</b>
+        </td>
+        <td width="100px">
+            <b>Ações</b>
+        </td>
+    </tr>
+    {% for course in courses %}
+    <tr>
+        <td>
+            {{ course.name}}
+        </td>
+
+        <td>
+            {{ course.email}}
+        </td>
+
+        <td>
+            {{ course.phone}}
+        </td>
+        <td>
+            <a href="{{ base_url }}/curso/remove?id={{course.id}}" class="btn btn-danger">
+                <i class="glyphicon glyphicon-trash"></i>
+
+            </a>
+
+            <a href="{{ base_url }}/curso/edit?id={{course.id}}" class="btn btn-primary">
+                <i class="glyphicon glyphicon-pencil"></i>
+
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<a href="curso/create" class="btn btn-primary">Cadastrar</a>

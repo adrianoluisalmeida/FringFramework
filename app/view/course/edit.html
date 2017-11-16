@@ -1,0 +1,17 @@
+{% extends '_partials/app.html' %}
+
+{% block title 'Home' %}
+
+{% block main %}
+
+<div class="col-md-8 col-md-offset-2">
+    <form action="{{ base_url }}/curso/update" method="post" name="register">
+
+        <input name="id" type="hidden" value="{{ course.id }}"/>
+
+        {% include 'course/form.html' %}
+    </form>
+</div>
+
+
+{% endblock %}

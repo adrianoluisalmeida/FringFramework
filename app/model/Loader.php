@@ -6,7 +6,7 @@ class Loader
 
     static $paths = array(
         'app/model/util/',
-        'app/model/testes/',
+        'app/model/databases/',
         'app/controller/',
         'app/helpers/',
         'lib/Twig/',
