@@ -15,7 +15,6 @@ class Request
         foreach ($fields as $key) {
             $inputs->$key = self::sanitizeString($key);
         }
-
         return $inputs;
     }
 

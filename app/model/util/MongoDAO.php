@@ -40,6 +40,15 @@ class MongoDAO extends ModelRegister implements DAO
         return "{$field}";
     }
 
+    /**
+     * Retorna get field name
+     * @return string
+     */
+    protected static function getValueName($field)
+    {
+        return $field;
+    }
+
 
     /**
      * @param $model
@@ -126,40 +135,71 @@ class MongoDAO extends ModelRegister implements DAO
         self::getMongo();
         $this->setValues($model);
 
-//        $this->counters($model);
-//        die;
-
         $modelName = $model->table;
-        $collection = $this->mongo->$modelName;
 
+
+        $collection = $this->mongo->$modelName;
+//        $update['id'] = 1;
+
+//        var_dump($modelName);
 
         if (array_key_exists('id', $update))
             $update['id'] = (int)$update['id'];
 
         if (count($update) > 0) {
 
+
             $dataUpdate = [];
             foreach ($this->fields as $field => $f) {
                 if ($field != 'id' && $f != NULL) {
-                    if (!empty($f))
-                        $dataUpdate[$this->getBindName($field)] = $this->getBindName($f);
+                    if (!empty($f)) {
+                        if (is_array($f)) {
+
+                            foreach ($f as $key => $item) {
+                                foreach ($item as $k => $i) {
+                                    if ($k != 'schema' && $k != 'table') {
+                                        $dataUpdate[$this->getBindName($field)][$key][$k] = $item->$k;
+                                    }
+                                }
+                            }
+                        } else {
+                            $dataUpdate[$this->getBindName($field)] = $f;
+                        }
+                    }
                 }
             }
+
+
             $collection->update($update, array('$set' => $dataUpdate));
-
         } else {
-
             $this->fields['id'] = 1;
-            return $collection->insert($this->fields);
-        }
+            $i = 0;
+            $dataInsert = [];
+            foreach ($this->fields as $key => $field) {
+                if (is_array($field)) {
 
+                    foreach ($field as $ke => $item) {
+                        foreach ($item as $k => $i) {
+                            if ($k != 'schema' && $k != 'table') {
+                                $dataInsert[$key][$ke][$k] = $item->$k;
+                            }
+                        }
+                    }
+                } else {
+                    $dataInsert[$this->getBindName($key)] = $field;
+                }
+
+            }
+        }
+        return $collection->insert($dataInsert);
     }
 
 
     /**
      * Delete register Collection
      */
-    public function delete($model)
+    public
+    function delete($model)
     {
         self::getMongo();
         $modelName = $model->table;
@@ -174,14 +214,14 @@ class MongoDAO extends ModelRegister implements DAO
                 else
                     $data[$key] = $f;
             }
-
         }
 
         return $collection->remove($data);
     }
 
 
-    protected function setValues($model)
+    protected
+    function setValues($model)
     {
         $model->schema = array('id' => NULL) + $model->schema;
         foreach ($model->schema as $name => $type) {

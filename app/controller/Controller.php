@@ -31,6 +31,10 @@ abstract class Controller
 
         $this->templateContext['base_url'] = $baseurl; //em qualquer view carrega a variavel $base_url
 
+        $this->initDao();
+    }
+
+    public function initDao(){
         $database = include(ROOT . 'app/config/database.php');
         $this->dao = $database['dbdrive'] == "mysql" ? new PdoDAO : new MongoDAO; //se é mysql usa o driver mysql, senao usa do mongodb
     }

@@ -30,51 +30,51 @@
 </div>
 <div class="form-group">
     <label>Apresentação do curso</label>
-    <textarea name="apresentacao" class="form-control"></textarea>
+    <textarea name="apresentacao" value="{{ curso.apresentacao }}" class="form-control"></textarea>
 </div>
 
 <h3>Informações do disciplina - 1</h3>
 
 <div class="form-group">
     <label>Nome disciplina:</label>
-    <input name="disciplinas[nome][]" class="form-control" />
+    <input name="disciplinas[0][nome]" class="form-control" />
 </div>
 
 <div class="form-group">
     <label>Código:</label>
-    <input name="disciplinas[codigo][]" class="form-control" />
+    <input name="disciplinas[0][codigo]" class="form-control" />
 </div>
 
 <div class="form-group">
     <label>Objetivos:</label>
-    <textarea name="disciplinas[objetivos][]" class="form-control"></textarea>
+    <textarea name="disciplinas[0][objetivos]" class="form-control"></textarea>
 </div>
 
 <div class="form-group">
     <label>Programa:</label>
-    <textarea name="disciplinas[programa][]" class="form-control"></textarea>
+    <textarea name="disciplinas[0][programa]" class="form-control"></textarea>
 </div>
 
 <h3>Informações do disciplina - 2</h3>
 
 <div class="form-group">
     <label>Nome disciplina:</label>
-    <input name="disciplinas[nome][]" class="form-control" />
+    <input name="disciplinas[1][nome]" class="form-control" />
 </div>
 
 <div class="form-group">
     <label>Código:</label>
-    <input name="disciplinas[codigo][]" class="form-control" />
+    <input name="disciplinas[1][codigo]" class="form-control" />
 </div>
 
 <div class="form-group">
     <label>Objetivos:</label>
-    <textarea name="disciplinas[objetivos][]" class="form-control"></textarea>
+    <textarea name="disciplinas[1][objetivos]" class="form-control"></textarea>
 </div>
 
 <div class="form-group">
     <label>Programa:</label>
-    <textarea name="disciplinas[programa][]" class="form-control"></textarea>
+    <textarea name="disciplinas[1][programa]" class="form-control"></textarea>
 </div>
 
 

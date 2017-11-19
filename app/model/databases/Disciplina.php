@@ -7,7 +7,7 @@
  */
 
 class Disciplina{
-    public $table = 'discplina';
+    public $table = 'disciplina';
 
     public $schema = [
         'id' => PDO::PARAM_INT,
@@ -15,8 +15,7 @@ class Disciplina{
         'codigo' => PDO::PARAM_STR,
         'objetivos' => PDO::PARAM_STR,
         'programa' => PDO::PARAM_STR,
-        'bibliografia' => PDO::PARAM_STR,
-        'atuacao_id' => PDO::PARAM_INT,
+//        'bibliografia' => PDO::PARAM_STR,
         'curso_id' => PDO::PARAM_INT,
     ];
 }

@@ -153,6 +153,45 @@ class PdoDAO extends ModelRegister implements DAO
         return "{$fieldName} = {$bindName}";
     }
 
+    public function insert($model)
+    {
+        $table = $model->table;
+        $this->setValues($model);
+
+        $cols = [];
+        $binds = [];
+
+        foreach ($this->fields as $key => $m) {
+//                var_dump("<pre>", $m['value'], "</pre>");
+            $relations = null;
+            if (is_array($m['value'])) {
+                $relations = $m['value'];
+            } else {
+                if ($key != 'id' && $key != 'table') {
+                    $cols[] = $this->getFieldName($key);
+                    $binds[] = $this->getBindName($key);
+                }
+            }
+
+
+        }
+        $columns = implode(', ', $cols);
+        $bindings = implode(', ', $binds);
+        $q = "INSERT INTO {$table} ({$columns}) VALUES ({$bindings})";
+
+
+        $sth = $this->pdo->prepare($q);
+        foreach ($this->fields as $key => $m) {
+
+            if ($m['value'] != NULL) {
+                $sth->bindValue($this->getBindName($key), $m['value'], $m['type']);
+            }
+        }
+        $result = $sth->execute();
+        return $result;
+
+    }
+
     /**
      * Method save, used create and update
      * @return bool
@@ -164,22 +203,36 @@ class PdoDAO extends ModelRegister implements DAO
 
         if (count($update) > 0) {
             foreach ($this->fields as $field => $m) {
-                if ($field != 'id' && $m['value'] != NULL) {
-                    $sets[] = self::getEqualBind($field);
+                $relations = null;
+                if (is_array($m['value'])) {
+                    $relations = $m['value'];
+                } else {
+                    if ($field != 'id' && $m['value'] != NULL) {
+                        $sets[] = self::getEqualBind($field);
+                    }
                 }
             }
-
 
             $set = implode(', ', $sets);
             $where = "id = " . $update['id'];
             $q = "UPDATE {$table} SET {$set} WHERE {$where}";
         } else {
 
+            $cols = [];
+            $binds = [];
+
             foreach ($this->fields as $key => $m) {
-                if ($key != 'id' && $key != 'table') {
-                    $cols[] = $this->getFieldName($key);
-                    $binds[] = $this->getBindName($key);
+                $relations = null;
+                if (is_array($m['value'])) {
+                    $relations = $m['value'];
+                } else {
+                    if ($key != 'id' && $key != 'table') {
+                        $cols[] = $this->getFieldName($key);
+                        $binds[] = $this->getBindName($key);
+                    }
                 }
+
+
             }
             $columns = implode(', ', $cols);
             $bindings = implode(', ', $binds);
@@ -187,22 +240,49 @@ class PdoDAO extends ModelRegister implements DAO
 
         }
 
+
+
+
         $sth = $this->pdo->prepare($q);
         foreach ($this->fields as $key => $m) {
 
-            if ($m['value'] != NULL) {
-                var_dump($m['value']);
+            if ($m['value'] != NULL && !is_array($m['value'])) {
                 $sth->bindValue($this->getBindName($key), $m['value'], $m['type']);
             }
         }
 
         $result = $sth->execute();
 
-        if ($result && $model->id == NULL) {
-            $model->id = $this->pdo->lastInsertId();
-        }
+        if ($result && $model->id == NULL)
+            $id = $this->pdo->lastInsertId();
+        else
+            $id = $model->id;
+
         $sth->closeCursor();
-        return $result;
+
+        if ($relations) {
+
+
+            foreach ($relations as $key => $relation) {
+
+                if (count($update) > 0) {
+                    $pdo = new PdoDAO();
+
+                    if($key == 0)
+                        $pdo->delete($relation, ['curso_id' => $update['id']]);
+
+                    $relation->curso_id = $update['id'];
+                }else{
+                    $relation->curso_id = $id;
+                }
+
+                $pdo = new PdoDAO();
+                $pdo->insert($relation);
+
+            }
+        }
+
+        return $id;
     }
 
 
@@ -210,11 +290,13 @@ class PdoDAO extends ModelRegister implements DAO
      * @param $id
      * @return mixed
      */
-    public function get($model){
+    public function get($model)
+    {
         return $this->getBy($model, array('id' => $model->id));
     }
 
-    protected function getBy($model, array $where = NULL){
+    protected function getBy($model, array $where = NULL)
+    {
         $sth = $this->getExecute($model, $where);
 
         $data = $sth->fetch();
@@ -242,17 +324,23 @@ class PdoDAO extends ModelRegister implements DAO
     /**
      * @return bool|void
      */
-    public function delete($model)
+    public function delete($model, $where = [])
     {
         $this->setValues($model);
-        $id = $this->fields['id']['value'];
-        if ($id == NULL) {
-            return;
+        if (!count($where) > 0) {
+            $id = $this->fields['id']['value'];
+            if ($id == NULL) {
+                return;
+            }
         }
         $table = $model->table;
         $q = "DELETE FROM {$table}";
-        $sth = self::prepareQuery($model, $q, array(self::getModelName($model) => array('id' => $id)));
 
+        if (count($where) > 0) {
+            $sth = self::prepareQuery($model, $q, array(self::getModelName($model) => $where));
+        } else {
+            $sth = self::prepareQuery($model, $q, array(self::getModelName($model) => array('id' => $id)));
+        }
         $result = $sth->execute();
         if ($result) {
             foreach ($this->fields as $field => $f) {
@@ -262,5 +350,6 @@ class PdoDAO extends ModelRegister implements DAO
         $sth->closeCursor();
         return $result;
     }
+
 
 }
