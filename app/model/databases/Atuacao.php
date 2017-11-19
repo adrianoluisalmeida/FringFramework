@@ -6,11 +6,11 @@
  * Time: 21:20
  */
 
-class Course{
-    public $table = 'courses';
+class Atuacao{
+    public $table = 'atuacao';
 
     public $schema = [
         'id' => PDO::PARAM_INT,
-        'name' => PDO::PARAM_STR,
+        'nome' => PDO::PARAM_STR,
     ];
 }

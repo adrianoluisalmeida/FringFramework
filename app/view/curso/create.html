@@ -1,0 +1,22 @@
+{% extends '_partials/app.html' %}
+
+{% block title 'Home' %}
+
+{% block main %}
+<div class="col-md-8 col-md-offset-2">
+    <form action="{{ base_url }}/curso/store" method="post" name="register">
+        {% include 'curso/form.html' %}
+    </form>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#novoDepartamento').click(function () {
+            alert('departamento');
+        })
+    })
+</script>
+{% endblock %}

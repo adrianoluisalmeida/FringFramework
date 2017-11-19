@@ -189,7 +189,9 @@ class PdoDAO extends ModelRegister implements DAO
 
         $sth = $this->pdo->prepare($q);
         foreach ($this->fields as $key => $m) {
+
             if ($m['value'] != NULL) {
+                var_dump($m['value']);
                 $sth->bindValue($this->getBindName($key), $m['value'], $m['type']);
             }
         }

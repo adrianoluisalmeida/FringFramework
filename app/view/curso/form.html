@@ -1,0 +1,81 @@
+<h3>Informações do curso</h3>
+<div class="form-group">
+    <label>Nome:</label>
+    <input type="text" name="nome" value="{{ curso.nome }}" class="form-control">
+</div>
+{% include 'departamentos/modal-form.html' %}
+
+<div class="form-group">
+    <label>Departamento:</label>
+    <select name="departamento_id" class="form-control">
+        {% for departamento in departamentos %}
+
+        {% if departamento.id == curso.departamento_id %}
+        <option value="{{ departamento.id }}" selected>{{ departamento.nome }}</option>
+        {% else %}
+        <option value="{{ departamento.id }}">{{ departamento.nome }}</option>
+        {% endif %}
+
+        {% endfor %}
+    </select>
+    <a href="#myModal" id="novoDepartamento" role="button" data-toggle="modal">Novo departamento</a>
+</div>
+<div class="form-group">
+    <label>Semestres:</label>
+    <input type="number" name="semestres" value="{{ curso.semestres }}" class="form-control"/>
+</div>
+<div class="form-group">
+    <label>Vagas:</label>
+    <input type="number" name="vagas" value="{{ curso.vagas }}" class="form-control"/>
+</div>
+<div class="form-group">
+    <label>Apresentação do curso</label>
+    <textarea name="apresentacao" class="form-control"></textarea>
+</div>
+
+<h3>Informações do disciplina - 1</h3>
+
+<div class="form-group">
+    <label>Nome disciplina:</label>
+    <input name="disciplinas[nome][]" class="form-control" />
+</div>
+
+<div class="form-group">
+    <label>Código:</label>
+    <input name="disciplinas[codigo][]" class="form-control" />
+</div>
+
+<div class="form-group">
+    <label>Objetivos:</label>
+    <textarea name="disciplinas[objetivos][]" class="form-control"></textarea>
+</div>
+
+<div class="form-group">
+    <label>Programa:</label>
+    <textarea name="disciplinas[programa][]" class="form-control"></textarea>
+</div>
+
+<h3>Informações do disciplina - 2</h3>
+
+<div class="form-group">
+    <label>Nome disciplina:</label>
+    <input name="disciplinas[nome][]" class="form-control" />
+</div>
+
+<div class="form-group">
+    <label>Código:</label>
+    <input name="disciplinas[codigo][]" class="form-control" />
+</div>
+
+<div class="form-group">
+    <label>Objetivos:</label>
+    <textarea name="disciplinas[objetivos][]" class="form-control"></textarea>
+</div>
+
+<div class="form-group">
+    <label>Programa:</label>
+    <textarea name="disciplinas[programa][]" class="form-control"></textarea>
+</div>
+
+
+<button type="submit" class="btn btn-primary pull-right">Enviar</button>
