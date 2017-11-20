@@ -240,9 +240,6 @@ class PdoDAO extends ModelRegister implements DAO
 
         }
 
-
-
-
         $sth = $this->pdo->prepare($q);
         foreach ($this->fields as $key => $m) {
 
@@ -250,6 +247,7 @@ class PdoDAO extends ModelRegister implements DAO
                 $sth->bindValue($this->getBindName($key), $m['value'], $m['type']);
             }
         }
+
 
         $result = $sth->execute();
 

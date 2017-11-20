@@ -27,7 +27,7 @@ class CursoController extends Controller
         $this->setView('curso/create.html');
 
 
-        $this->addToView('departamentos', [['id' => 1, 'nome' => 'informatica']]); //parametros que passam pra view + consulta
+        $this->addToView('departamentos', ['Informática']); //parametros que passam pra view + consulta
 
         return $this->twig->render($this->getView(), $this->getContext());
     }
@@ -36,15 +36,10 @@ class CursoController extends Controller
     {
         $id = Request::getParam('id');
         $this->setView('curso/edit.html');
-        $departamento = new Departamento();
 
-//        $this->addToView('departamentos', $this->dao->getAll($departamento)); //parametros que passam pra view + consulta
-        $this->addToView('departamentos', ['id' => 'informatica']); //parametros que passam pra view + consulta
+        $this->addToView('departamentos', ['Informática']); //parametros que passam pra view + consulta
         $curso = new Curso();
         $curso->id = $id;
-
-//        var_dump('<pre>', $this->dao->get($curso), '</pre>');
-//        die;
 
         $this->addToView('curso', $this->dao->get($curso));
 
@@ -55,12 +50,13 @@ class CursoController extends Controller
     {
         $request = Request::all($this->validations());
 
+
         $this->initDao();
         $curso = new Curso();
         $curso->nome = $request->nome;
         $curso->semestres = (int)$request->semestres;
         $curso->vagas = (int)$request->vagas;
-        $curso->departamento_id = (int)$request->departamento_id;
+        $curso->departamento = $request->departamento;
         $curso->apresentacao = $request->apresentacao;
 
         $disciplina[0] = new Disciplina();
@@ -76,7 +72,11 @@ class CursoController extends Controller
         $disciplina[1]->programa = "teste_Desc";
 
         $curso->disciplinas = $disciplina;
+//        var_dump('<pre>', $curso, '</pre>');
+//        die;
+
         $id = $this->dao->save($curso);
+
 
         $this->redirect($this->getContext()['base_url'] . '/curso');
     }
@@ -86,12 +86,14 @@ class CursoController extends Controller
         $id = Request::getPost("id");
         $request = Request::all($this->validations());
 
+
+
         $this->initDao();
         $curso = new Curso();
         $curso->nome = $request->nome;
         $curso->semestres = (int)$request->semestres;
         $curso->vagas = (int)$request->vagas;
-        $curso->departamento_id = (int)$request->departamento_id;
+        $curso->departamento = $request->departamento;
         $curso->apresentacao = $request->apresentacao;
 
         $disciplina[0] = new Disciplina();
@@ -129,9 +131,8 @@ class CursoController extends Controller
             'semestres',
             'modalidade',
             'vagas',
-            'departamento_id',
-            'apresentacao',
-//            'disciplinas'
+            'departamento',
+            'apresentacao'
         ];
     }
 }

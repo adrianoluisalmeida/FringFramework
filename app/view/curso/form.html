@@ -7,13 +7,13 @@
 
 <div class="form-group">
     <label>Departamento:</label>
-    <select name="departamento_id" class="form-control">
+    <select name="departamento" class="form-control">
         {% for departamento in departamentos %}
 
-        {% if departamento.id == curso.departamento_id %}
-        <option value="{{ departamento.id }}" selected>{{ departamento.nome }}</option>
+        {% if departamento == curso.departamento %}
+        <option value="{{ departamento }}" selected>{{ departamento }}</option>
         {% else %}
-        <option value="{{ departamento.id }}">{{ departamento.nome }}</option>
+        <option value="{{ departamento }}">{{ departamento }}</option>
         {% endif %}
 
         {% endfor %}

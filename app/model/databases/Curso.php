@@ -14,7 +14,7 @@ class Curso{
         'nome' => PDO::PARAM_STR,
         'semestres' => PDO::PARAM_INT,
         'vagas' => PDO::PARAM_INT,
-        'departamento_id' => PDO::PARAM_INT,
+        'departamento' => PDO::PARAM_STR,
         'apresentacao' => PDO::PARAM_STR,
         'disciplinas' => []
     ];
