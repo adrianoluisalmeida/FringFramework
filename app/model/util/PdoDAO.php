@@ -162,7 +162,6 @@ class PdoDAO extends ModelRegister implements DAO
         $binds = [];
 
         foreach ($this->fields as $key => $m) {
-//                var_dump("<pre>", $m['value'], "</pre>");
             $relations = null;
             if (is_array($m['value'])) {
                 $relations = $m['value'];
@@ -258,25 +257,29 @@ class PdoDAO extends ModelRegister implements DAO
 
         $sth->closeCursor();
 
+
         if ($relations) {
 
-
+            $i = 0;
             foreach ($relations as $key => $relation) {
 
                 if (count($update) > 0) {
+
+
                     $pdo = new PdoDAO();
 
-                    if($key == 0)
-                        $pdo->delete($relation, ['curso_id' => $update['id']]);
+                    if ($i == 0)
+                        $pdo->delete($relation, ['curso_id' => (int)$update['id']]);
 
                     $relation->curso_id = $update['id'];
-                }else{
+                } else {
                     $relation->curso_id = $id;
                 }
 
                 $pdo = new PdoDAO();
                 $pdo->insert($relation);
 
+                $i++;
             }
         }
 
@@ -295,10 +298,17 @@ class PdoDAO extends ModelRegister implements DAO
 
     protected function getBy($model, array $where = NULL)
     {
+        $disciplina = new Disciplina();
+
         $sth = $this->getExecute($model, $where);
 
         $data = $sth->fetch();
         $sth->closeCursor();
+
+        foreach ($this->getAllBy($disciplina) as $key => $disciplina) {
+            $data->disciplinas[$key] = ['nome' => $disciplina->nome, 'codigo' => $disciplina->codigo, 'objetivos' => $disciplina->programa, 'programa' => $disciplina->programa, 'bibliografia' => $disciplina->bibliografia];
+        }
+
         return $data;
     }
 
@@ -325,21 +335,35 @@ class PdoDAO extends ModelRegister implements DAO
     public function delete($model, $where = [])
     {
         $this->setValues($model);
+
+
         if (!count($where) > 0) {
+
+
             $id = $this->fields['id']['value'];
             if ($id == NULL) {
                 return;
             }
+
+            $pdo = new PdoDAO();
+            $disciplina = new Disciplina();
+
+            $pdo->delete($disciplina, ['curso_id' => $id]);
         }
+
         $table = $model->table;
         $q = "DELETE FROM {$table}";
+
 
         if (count($where) > 0) {
             $sth = self::prepareQuery($model, $q, array(self::getModelName($model) => $where));
         } else {
             $sth = self::prepareQuery($model, $q, array(self::getModelName($model) => array('id' => $id)));
         }
+
+
         $result = $sth->execute();
+
         if ($result) {
             foreach ($this->fields as $field => $f) {
                 unset($f['value']);

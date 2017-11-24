@@ -59,21 +59,18 @@ class CursoController extends Controller
         $curso->departamento = $request->departamento;
         $curso->apresentacao = $request->apresentacao;
 
-        $disciplina[0] = new Disciplina();
-        $disciplina[0]->nome = "teste22";
-        $disciplina[0]->codigo = "teste_Desc";
-        $disciplina[0]->objetivos = "teste_Desc";
-        $disciplina[0]->programa = "teste_Desc";
 
-        $disciplina[1] = new Disciplina();
-        $disciplina[1]->nome = "teste333";
-        $disciplina[1]->codigo = "teste_Desc2";
-        $disciplina[1]->objetivos = "teste_Desc";
-        $disciplina[1]->programa = "teste_Desc";
+
+
+        foreach ($_POST['disciplinas'] as $key => $disc) {
+            $disciplina[$key] = new Disciplina();
+            $disciplina[$key]->nome = $disc['nome'];
+            $disciplina[$key]->codigo = $disc['codigo'];
+            $disciplina[$key]->objetivos = $disc['objetivos'];
+            $disciplina[$key]->programa = $disc['programa'];
+        }
 
         $curso->disciplinas = $disciplina;
-//        var_dump('<pre>', $curso, '</pre>');
-//        die;
 
         $id = $this->dao->save($curso);
 
@@ -86,8 +83,6 @@ class CursoController extends Controller
         $id = Request::getPost("id");
         $request = Request::all($this->validations());
 
-
-
         $this->initDao();
         $curso = new Curso();
         $curso->nome = $request->nome;
@@ -96,18 +91,15 @@ class CursoController extends Controller
         $curso->departamento = $request->departamento;
         $curso->apresentacao = $request->apresentacao;
 
-        $disciplina[0] = new Disciplina();
-        $disciplina[0]->nome = "teste22";
-        $disciplina[0]->codigo = "teste_Desc";
-        $disciplina[0]->objetivos = "teste_Desc";
-        $disciplina[0]->programa = "teste_Desc";
-
-        $disciplina[1] = new Disciplina();
-        $disciplina[1]->nome = "teste31";
-        $disciplina[1]->codigo = "teste_Desc2";
-        $disciplina[1]->objetivos = "teste_Desc";
-        $disciplina[1]->programa = "teste_Desc";
+        foreach ($_POST['disciplinas'] as $key => $disc) {
+            $disciplina[$key] = new Disciplina();
+            $disciplina[$key]->nome = $disc['nome'];
+            $disciplina[$key]->codigo = $disc['codigo'];
+            $disciplina[$key]->objetivos = $disc['objetivos'];
+            $disciplina[$key]->programa = $disc['programa'];
+        }
         $curso->disciplinas = $disciplina;
+
 
         $this->dao->save($curso, ["id" => $id]);
         $this->redirect($this->getContext()['base_url'] . '/curso');
@@ -117,7 +109,7 @@ class CursoController extends Controller
     {
         $id = Request::getParam('id');
         $curso = new Curso();
-        $curso->id = $id;
+        $curso->id = (int) $id;
 
         $this->dao->delete($curso);
         $this->redirect($this->getContext()['base_url'] . '/curso');

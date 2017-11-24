@@ -93,36 +93,20 @@ class MongoDAO extends ModelRegister implements DAO
         return is_null($where) ? $document : $document[$key];
     }
 
-    public function counters($model)
+    public function getNextSequence($name = "cursoid")
     {
-
-        self::getMongo();
-        $this->setValues($model);
-
-        $modelName = $model->table;
         $collection = $this->mongo->counters;
 
-//        $insert = [
-//            "_id" => $model->table,
-//            "seq" => new NumberLong(1)
-//        ];
-//        $collection->insert($insert);
-
-//        $seq = $collection->co(
-//            array(
-//                'findandmodify' => 'counters',
-//                'query' => array('_id' => $model->table),
-//                'update' => array(
-//                    '$inc' => array(
-//                        'seq' => 1
-//                    )
-//                ),
-//                'new' => TRUE)
-//        );
-//
-//        var_dump($seq['value']['seq']);
-//die;
-//        db.seq.insert({"_id":"users", "seq":new NumberLong(1)});
+        $retval = $collection->findAndModify(
+            array('_id' => $name),
+            array('$inc' => array("seq" => 1)),
+            null,
+            array(
+                "new" => true,
+                "upsert" => true
+            )
+        );
+        return $retval['seq'];
 
     }
 
@@ -139,10 +123,6 @@ class MongoDAO extends ModelRegister implements DAO
 
 
         $collection = $this->mongo->$modelName;
-//        $update['id'] = 1;
-
-//        var_dump($modelName);
-
         if (array_key_exists('id', $update))
             $update['id'] = (int)$update['id'];
 
@@ -172,8 +152,10 @@ class MongoDAO extends ModelRegister implements DAO
 
             $collection->update($update, array('$set' => $dataUpdate));
         } else {
-            $this->fields['id'] = 1;
-            $i = 0;
+
+            $this->fields['id'] = $this->getNextSequence();
+
+//            $i = 0;
             $dataInsert = [];
             foreach ($this->fields as $key => $field) {
                 if (is_array($field)) {
@@ -198,10 +180,10 @@ class MongoDAO extends ModelRegister implements DAO
     /**
      * Delete register Collection
      */
-    public
-    function delete($model)
+    public function delete($model)
     {
         self::getMongo();
+        $this->setValues($model);
         $modelName = $model->table;
         $collection = $this->mongo->$modelName;
 
