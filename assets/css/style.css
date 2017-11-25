@@ -54,5 +54,12 @@ html {
     min-height: 100%;
 }
 body {
+    background-color: #f0f8ff;
     margin: 0 0 60px; /* altura do seu footer */
+}
+.btn{
+    border-radius: 1px !important;
+}
+.modal-footer{
+    border-top: none !important;
 }
