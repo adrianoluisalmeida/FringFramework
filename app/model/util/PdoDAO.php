@@ -46,13 +46,13 @@ class PdoDAO extends ModelRegister implements DAO
     }
 
 
-    /**
-     * @return array
-     */
-    public function getAll($model)
-    {
-        return $this->getAllBy($model);
-    }
+//    /**
+//     * @return array
+//     */
+//    public function getAll($model)
+//    {
+//        return $this->getAllBy($model);
+//    }
 
     /**
      * @param array|NULL $where
@@ -286,6 +286,40 @@ class PdoDAO extends ModelRegister implements DAO
         return $id;
     }
 
+    /**
+     * @return array
+     */
+    public function getAll($model)
+    {
+        $disciplina = new Disciplina();
+
+        $sth = $this->getExecute($model);
+        $data = $sth->fetchAll();
+
+        $sth->closeCursor();
+
+
+        foreach ($data as $key => $d) {
+            foreach ($this->getAllBy($disciplina) as $key => $disciplina) {
+                $data[$key]->disciplinas[$key] = ['nome' => $disciplina->nome, 'codigo' => $disciplina->codigo, 'objetivos' => $disciplina->programa, 'programa' => $disciplina->programa, 'bibliografia' => $disciplina->bibliografia];
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param array|NULL $where
+     * @return array
+     */
+    public function getAllBy($model, array $where = NULL)
+    {
+        $sth = self::getExecute($model, $where);
+        $data = $sth->fetchAll();
+        $sth->closeCursor();
+        return $data;
+    }
+
 
     /**
      * @param $id
@@ -312,17 +346,6 @@ class PdoDAO extends ModelRegister implements DAO
         return $data;
     }
 
-    /**
-     * @param array|NULL $where
-     * @return array
-     */
-    public function getAllBy($model, array $where = NULL)
-    {
-        $sth = self::getExecute($model, $where);
-        $data = $sth->fetchAll();
-        $sth->closeCursor();
-        return $data;
-    }
 
     protected function getModelName($model)
     {

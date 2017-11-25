@@ -59,9 +59,6 @@ class CursoController extends Controller
         $curso->departamento = $request->departamento;
         $curso->apresentacao = $request->apresentacao;
 
-
-
-
         foreach ($_POST['disciplinas'] as $key => $disc) {
             $disciplina[$key] = new Disciplina();
             $disciplina[$key]->nome = $disc['nome'];

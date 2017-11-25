@@ -44,7 +44,60 @@
                     <i class="fa fa-pencil"></i>
                     Informações detalhadas:
                  </h3>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg" value="{{curso.id}}">
+
+                    <div id="disciplina-{{ curso.id }}" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">{{ curso.nome }}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    {% for key, disciplina in curso.disciplinas %}
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="x_panel">
+                                            <div class="x_title">
+                                                <h2><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                                    <!--NOME DISCIPLINA-->
+                                                    {{ disciplina.nome}}
+                                                </h2>
+                                                <ul class="nav navbar-right panel_toolbox">
+
+                                                    <li>
+                                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                    </li>
+                                                </ul>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="x_content">
+                                                <div class="text-center">
+                                                    <h3><i class="fa fa-file-o"></i>Programa</h3>
+                                                    </br>
+                                                    <!--Programa da disciplina-->
+                                                    <p>{{ disciplina.programa }}</p>
+                                                    </br>
+                                                    <h3><i class="fa fa-exclamation"></i> Objetivos</h3>
+                                                    </br>
+                                                    <!--objetivos da disciplina-->
+                                                    <p>{{ disciplina.objetivos }}</p>
+                                                    </br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#disciplina-{{ curso.id }}" value="{{curso.id}}">
                         <i class="fa fa-folder-open" aria-hidden="true"></i>
                         Ver Disciplinas
                     </button>
@@ -75,57 +128,7 @@
     {% endfor %}
 
 
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
 
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Nome Disciplina</h4>
-                </div>
-                <div class="modal-body">
-                    {% for curso in cursos %}
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
-                            <div class="x_title">
-                                <h2><i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                    <!--NOME DISCIPLINA-->
-                                    {{ curso.nome}}
-                                </h2>
-                                <ul class="nav navbar-right panel_toolbox">
-
-                                    <li>
-                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                </ul>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="x_content">
-                                <div class="text-center">
-                                    <h3><i class="fa fa-file-o"></i>Programa</h3>
-                                    </br>
-                                    <!--Programa da disciplina-->
-                                    <p>{{ curso.apresentacao }}</p>
-                                    </br>
-                                    <h3><i class="fa fa-exclamation"></i> Objetivos</h3>
-                                    </br>
-                                    <!--objetivos da disciplina-->
-                                    <p>{{ curso.apresentacao }}</p>
-                                    </br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
     <div class="clearfix" style="margin-bottom: 70px"></div>
 
 </body>
