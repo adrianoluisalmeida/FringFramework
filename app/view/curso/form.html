@@ -9,13 +9,11 @@
     <label>Departamento:</label>
     <select name="departamento" class="form-control">
         {% for departamento in departamentos %}
-
-        {% if departamento == curso.departamento %}
-        <option value="{{ departamento }}" selected>{{ departamento }}</option>
-        {% else %}
-        <option value="{{ departamento }}">{{ departamento }}</option>
-        {% endif %}
-
+            {% if departamento == curso.departamento %}
+            <option value="{{ departamento }}" selected>{{ departamento }}</option>
+            {% else %}
+            <option value="{{ departamento }}">{{ departamento }}</option>
+            {% endif %}
         {% endfor %}
     </select>
 </div>
@@ -36,33 +34,32 @@
 <div class="disciplinas">
 
     {% for key, disciplina in curso.disciplinas %}
-    <div class="disciplina-{{ key }}">
-        <h3>Informações do disciplina</h3>
+        <div class="disciplina-{{ key }}">
+            <h3>Informações do disciplina</h3>
 
-        <button data-key="{{ key }}" class="btn btn-danger remove">Remove</button>
+            <button data-key="{{ key }}" class="btn btn-danger remove">Remove</button>
 
-        <div class="form-group">
-            <label>Nome disciplina:</label>
-            <input name="disciplinas[{{ key }}][nome]" value="{{ disciplina.nome }}" class="form-control"/>
+            <div class="form-group">
+                <label>Nome disciplina:</label>
+                <input name="disciplinas[{{ key }}][nome]" value="{{ disciplina.nome }}" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label>Código:</label>
+                <input name="disciplinas[{{ key }}][codigo]" value="{{ disciplina.codigo }}" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label>Objetivos:</label>
+                <textarea name="disciplinas[{{ key }}][objetivos]"
+                          class="form-control">{{ disciplina.objetivos }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Programa:</label>
+                <textarea name="disciplinas[{{ key }}][programa]" class="form-control">{{ disciplina.programa }}</textarea>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label>Código:</label>
-            <input name="disciplinas[{{ key }}][codigo]" value="{{ disciplina.codigo }}" class="form-control"/>
-        </div>
-
-        <div class="form-group">
-            <label>Objetivos:</label>
-            <textarea name="disciplinas[{{ key }}][objetivos]"
-                      class="form-control">{{ disciplina.objetivos }}</textarea>
-        </div>
-
-        <div class="form-group">
-            <label>Programa:</label>
-            <textarea name="disciplinas[{{ key }}][programa]" class="form-control">{{ disciplina.programa }}</textarea>
-        </div>
-    </div>
-
     {% endfor %}
 
 </div>

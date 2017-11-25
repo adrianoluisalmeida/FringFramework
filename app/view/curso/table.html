@@ -1,32 +1,131 @@
-<h1>Listagem de Cursos</h1>
+<h1>Listagem de Cursos <a href="curso/create" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Cadastrar</a></h1>
+
 <hr/>
-<table class="table table-bordered">
-    <tr class="text-center">
-        <td>
-            <b>Nome</b>
-        </td>
-        <td width="100px">
-            <b>Ações</b>
-        </td>
-    </tr>
+
+<body class="nav-md">
+
+    <!--cursos-->
     {% for curso in cursos %}
-    <tr>
-        <td>
-            {{ curso.nome}}
-        </td>
-
-        <td>
-            <a href="{{ base_url }}/curso/remove?id={{curso.id}}" class="btn btn-danger">
-                <i class="glyphicon glyphicon-trash"></i>
-
-            </a>
-
-            <a href="{{ base_url }}/curso/edit?id={{curso.id}}" class="btn btn-primary">
-                <i class="glyphicon glyphicon-pencil"></i>
-
-            </a>
-        </td>
-    </tr>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2><i class="fa fa-graduation-cap" aria-hidden="true"></i></i> {{ curso.nome}}</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="{{ base_url }}/curso/edit?id={{curso.id}}">
+                                    <i class="glyphicon glyphicon-pencil" style="color: green"></i>Editar
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ base_url }}/curso/remove?id={{curso.id}}">
+                                    <i class="glyphicon glyphicon-trash" style="color: red"></i>Excluir
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="text-center">
+                <h3><i class="fa fa-book"></i>Apresentação</h3>
+                    </br>
+                    <p>{{ curso.apresentacao }}</p>
+                    </br>
+                <h3>
+                    <i class="fa fa-pencil"></i>
+                    Informações detalhadas:
+                 </h3>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg" value="{{curso.id}}">
+                        <i class="fa fa-folder-open" aria-hidden="true"></i>
+                        Ver Disciplinas
+                    </button>
+                </div>
+                <div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Número de semestres</th>
+                            <th>Quantidade de vagas</th>
+                            <th>Departamento</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td> {{ curso.id }}</td>
+                            <td>{{ curso.semestres }}</td>
+                            <td>{{ curso.vagas }}</td>
+                            <td>{{ curso.departamento }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     {% endfor %}
-</table>
-<a href="curso/create" class="btn btn-primary">Cadastrar</a>
+
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Nome Disciplina</h4>
+                </div>
+                <div class="modal-body">
+                    {% for curso in cursos %}
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                    <!--NOME DISCIPLINA-->
+                                    {{ curso.nome}}
+                                </h2>
+                                <ul class="nav navbar-right panel_toolbox">
+
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div class="text-center">
+                                    <h3><i class="fa fa-file-o"></i>Programa</h3>
+                                    </br>
+                                    <!--Programa da disciplina-->
+                                    <p>{{ curso.apresentacao }}</p>
+                                    </br>
+                                    <h3><i class="fa fa-exclamation"></i> Objetivos</h3>
+                                    </br>
+                                    <!--objetivos da disciplina-->
+                                    <p>{{ curso.apresentacao }}</p>
+                                    </br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="clearfix" style="margin-bottom: 70px"></div>
+
+</body>

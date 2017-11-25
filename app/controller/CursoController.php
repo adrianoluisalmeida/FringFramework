@@ -27,7 +27,7 @@ class CursoController extends Controller
         $this->setView('curso/create.html');
 
 
-        $this->addToView('departamentos', ['Informática']); //parametros que passam pra view + consulta
+        $this->addToView('departamentos', ['Informática', 'Saúde','Engenharia','Rurais','Exatas','Artes','Educação']); //parametros que passam pra view + consulta
 
         return $this->twig->render($this->getView(), $this->getContext());
     }
