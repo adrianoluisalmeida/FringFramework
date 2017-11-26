@@ -1,14 +1,14 @@
 # TRABALHO PRÁTICO PROJETO E GERÊNCIA DE BANCO DE DADOS 
 
-##Objetivo
+## Objetivo
   Criar uma aplicação que consiga comunicar-se com dois SGBDs diferentes, onde um seja relacional e outro orientado a documento.
   
-##Solução
+## Solução
 Pensando nesse problemática, surgiu o
 **Busca DCG** 
 *O portal que facilita suas escolhas de Disciplinas Complementares e te aproxima da sua área de Interesse.*
 
-##Desenvolvimento
+## Desenvolvimento
 
 * Linguagem php 5.6
 * psql (PostgreSQL) 9.6.6
