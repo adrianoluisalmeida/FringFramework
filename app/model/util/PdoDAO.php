@@ -301,7 +301,7 @@ class PdoDAO extends ModelRegister implements DAO
         foreach ($data as $key => $d) {
 
             foreach ($this->getAllBy($disciplina, ['curso_id' => $d->id]) as $k => $disciplina) {
-                $data[$key]->disciplinas[$k] = ['nome' => $disciplina->nome, 'codigo' => $disciplina->codigo, 'objetivos' => $disciplina->programa, 'programa' => $disciplina->programa];
+                $data[$key]->disciplinas[$k] = ['nome' => $disciplina->nome, 'codigo' => $disciplina->codigo, 'objetivos' => $disciplina->objetivos, 'programa' => $disciplina->programa];
             }
         }
 
@@ -340,7 +340,7 @@ class PdoDAO extends ModelRegister implements DAO
         $sth->closeCursor();
 
         foreach ($this->getAllBy($disciplina) as $key => $disciplina) {
-            $data->disciplinas[$key] = ['nome' => $disciplina->nome, 'codigo' => $disciplina->codigo, 'objetivos' => $disciplina->programa, 'programa' => $disciplina->programa, 'bibliografia' => $disciplina->bibliografia];
+            $data->disciplinas[$key] = ['nome' => $disciplina->nome, 'codigo' => $disciplina->codigo, 'objetivos' => $disciplina->objetivos, 'programa' => $disciplina->programa];
         }
 
         return $data;

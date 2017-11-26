@@ -6,9 +6,9 @@
  * Time: 03:08
  */
 
-//$active_db = 'mysql'; //qual será a base usada mongodb ou mysql
+$active_db = 'mysql'; //qual será a base usada mongodb ou mysql
 //$active_db = 'pgsql'; //qual será a base usada mongodb ou mysql
-$active_db = 'mongodb'; //qual será a base usada mongodb ou mysql
+//$active_db = 'mongodb'; //qual será a base usada mongodb ou mysql
 
 $groups = [
     'mysql' => [
