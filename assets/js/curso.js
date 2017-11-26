@@ -1,19 +1,13 @@
+//Remove Disciplina da estrutura do array
+function remover(key){
+    $('.disciplina-' + key).remove();
+};
+
+
 $(document).ready(function () {
 
 
-    //Remove Disciplina da estrutura do array
-    $('.remove').click(function (e) {
-        e.preventDefault();
-
-        var key = $(this).attr('data-key');
-
-        $('.disciplina-' + key).remove();
-
-    });
-
     //Adiciona novos campos para disciplina
-
-
     $('.adicionar').click(function (e) {
         e.preventDefault();
 
@@ -22,9 +16,10 @@ $(document).ready(function () {
         $("[name*='key_disciplina']").val(key += 1);
 
         $('.disciplinas').append("" +
-            "<div class=\"disciplina-" + key + "\">" +
+            "<div class=\"disciplina-" + key + "\"><div class=\"x_panel\">" +
+            "" +
             "<h3>Informações do disciplina</h3>" +
-            "<button data-key=\"" + key + "\" class=\"btn btn-danger remove\">Remove</button>" +
+            "<a onclick=\"remover("+key+")\" data-key=\"" + key + "\" class=\"btn btn-danger remover\">Remove</a>" +
             "<div class=\"form-group\">\n" +
             "            <label>Nome disciplina:</label>\n" +
             "            <input name=\"disciplinas[" + key + "][nome]\" class=\"form-control\"/>\n" +
@@ -42,7 +37,7 @@ $(document).ready(function () {
             "            <label>Programa:</label>\n" +
             "            <textarea name=\"disciplinas[" + key + "][programa]\" class=\"form-control\"></textarea>\n" +
             "        </div>" +
-            "</div>");
+            "</div></div>");
 
     })
 

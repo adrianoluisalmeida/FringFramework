@@ -1,11 +1,12 @@
 footer{
     width: 100%;
-    position: absolute;
+    position: relative;
     bottom: 0;
     left: 0;
     height: 140px;
     text-align: center;
-    background-color: #2a2730;
+    background-color: #263248;
+    clear: both;
     color: #99979c;
 }
 
@@ -56,12 +57,16 @@ html {
     min-height: 100%;
 }
 body {
-    background-color: #f0f8ff;
-    margin: 0 0 60px; /* altura do seu footer */
+    background-color: #f1f1f1;
+    margin: 0 0 0px; /* altura do seu footer */
 }
 .btn{
     border-radius: 1px !important;
 }
 .modal-footer{
     border-top: none !important;
+}
+
+.form-control{
+    border-radius: 0 !important;
 }
