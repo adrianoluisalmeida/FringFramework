@@ -5,7 +5,7 @@
  * Date: 10/11/17
  * Time: 01:07
  */
-
+header("Content-Type: text/html; charset=utf-8",true);
 class PdoDAO extends ModelRegister implements DAO
 {
     private $pdo;
@@ -30,7 +30,7 @@ class PdoDAO extends ModelRegister implements DAO
             $database = include(ROOT . 'app/config/database.php');
 
             $this->pdo = new PDO(
-                $database['dbdrive'] . ':dbname=' . $database['dbname'] . ';host=' . $database['hostname'],
+                $database['dbdrive'] . ':dbname=' . $database['dbname'] . ';charset=utf8',
                 $database['username'],
                 $database['passwd']
             );

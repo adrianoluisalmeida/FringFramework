@@ -14,7 +14,7 @@ $groups = [
         'dbdrive' => 'mysql',
         'hostname' => 'localhost',
         'username' => 'root',
-        'passwd' => 'root',
+        'passwd' => '',
         'dbname' => 'gbd'
     ],
     'mongodb' => [

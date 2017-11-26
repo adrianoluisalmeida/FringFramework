@@ -78,6 +78,8 @@ class CursoController extends Controller
         $request = Request::all($this->validations());
 
         $this->initDao();
+
+
         $curso = new Curso();
         $curso->nome = $request->nome;
         $curso->semestres = (int)$request->semestres;
@@ -96,6 +98,9 @@ class CursoController extends Controller
 
 
         $this->dao->save($curso, ["id" => $id]);
+
+
+
         $this->redirect($this->getContext()['base_url'] . '/curso');
     }
 

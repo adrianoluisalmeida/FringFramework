@@ -19,3 +19,13 @@ CREATE TABLE disciplina (
   PRIMARY KEY (id),
   FOREIGN KEY (curso_id) REFERENCES curso (id)
 );
+
+ALTER DATABASE gbd CHARSET = UTF8 COLLATE = utf8_general_ci;
+
+select * from curso;
+insert into curso values (3, "Administração III", 8, "Sociais e Humanas", 44, "O curso ADMINISTRAÇÃO");
+
+
+drop table curso;
+
+
