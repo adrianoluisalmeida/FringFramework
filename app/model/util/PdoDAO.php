@@ -30,7 +30,7 @@ class PdoDAO extends ModelRegister implements DAO
             $database = include(ROOT . 'app/config/database.php');
 
             $this->pdo = new PDO(
-                $database['dbdrive'] . ':dbname=' . $database['dbname'] . ';charset=utf8',
+                $database['dbdrive'] . ':dbname=' . $database['dbname'] . $database['charset'] . $database['hostname'],
                 $database['username'],
                 $database['passwd']
             );
@@ -301,7 +301,7 @@ class PdoDAO extends ModelRegister implements DAO
         foreach ($data as $key => $d) {
 
             foreach ($this->getAllBy($disciplina, ['curso_id' => $d->id]) as $k => $disciplina) {
-                $data[$key]->disciplinas[$k] = ['nome' => $disciplina->nome, 'codigo' => $disciplina->codigo, 'objetivos' => $disciplina->programa, 'programa' => $disciplina->programa, 'bibliografia' => $disciplina->bibliografia];
+                $data[$key]->disciplinas[$k] = ['nome' => $disciplina->nome, 'codigo' => $disciplina->codigo, 'objetivos' => $disciplina->programa, 'programa' => $disciplina->programa];
             }
         }
 

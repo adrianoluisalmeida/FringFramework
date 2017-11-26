@@ -36,7 +36,9 @@ abstract class Controller
 
     public function initDao(){
         $database = include(ROOT . 'app/config/database.php');
-        $this->dao = $database['dbdrive'] == "mysql" ? new PdoDAO : new MongoDAO; //se é mysql usa o driver mysql, senao usa do mongodb
+//        var_dump($database);
+//        die;
+        $this->dao = $database['dbdrive'] == "mongodb" ? new MongoDAO : new PdoDAO; //se é mysql usa o driver mysql, senao usa do mongodb
     }
 
     /**

@@ -14,15 +14,16 @@ CREATE TABLE disciplina (
   codigo       VARCHAR(20),
   objetivos    TEXT,
   programa     TEXT,
-  bibliografia TEXT,
   curso_id     INT,
   PRIMARY KEY (id),
   FOREIGN KEY (curso_id) REFERENCES curso (id)
 );
 
+
+
 ALTER DATABASE gbd CHARSET = UTF8 COLLATE = utf8_general_ci;
 
-select * from curso;
+select * from disciplina;
 insert into curso values (3, "Administração III", 8, "Sociais e Humanas", 44, "O curso ADMINISTRAÇÃO");
 
 
