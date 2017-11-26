@@ -2,7 +2,6 @@ CREATE TABLE curso (
   id              INTEGER AUTO_INCREMENT,
   nome            VARCHAR(100),
   semestres       TINYINT,
-  modalidade      VARCHAR(20),
   departamento    TEXT,
   vagas           TINYINT,
   apresentacao    TEXT,
@@ -17,7 +16,6 @@ CREATE TABLE disciplina (
   programa     TEXT,
   bibliografia TEXT,
   curso_id     INT,
-  atuacao_id   INT,
   PRIMARY KEY (id),
   FOREIGN KEY (curso_id) REFERENCES curso (id)
 );

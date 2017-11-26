@@ -15,7 +15,6 @@ class Disciplina{
         'codigo' => PDO::PARAM_STR,
         'objetivos' => PDO::PARAM_STR,
         'programa' => PDO::PARAM_STR,
-//        'bibliografia' => PDO::PARAM_STR,
         'curso_id' => PDO::PARAM_INT,
     ];
 }

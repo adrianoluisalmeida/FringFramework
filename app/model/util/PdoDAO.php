@@ -9,7 +9,6 @@
 class PdoDAO extends ModelRegister implements DAO
 {
     private $pdo;
-    private $table;
     private $fields = array();
 
 

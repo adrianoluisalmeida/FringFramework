@@ -93,7 +93,7 @@ class MongoDAO extends ModelRegister implements DAO
         return is_null($where) ? $document : $document[$key];
     }
 
-    public function getNextSequence($name = "cursoid")
+    protected function getNextSequence($name = "cursoid")
     {
         $collection = $this->mongo->counters;
 

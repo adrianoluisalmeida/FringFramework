@@ -25,9 +25,7 @@ class CursoController extends Controller
     public function create()
     {
         $this->setView('curso/create.html');
-
-
-        $this->addToView('departamentos', ['Informática', 'Saúde','Engenharia','Rurais','Exatas','Artes','Educação']); //parametros que passam pra view + consulta
+        $this->addToView('departamentos', ['Informática', 'Saúde','Engenharia','Rurais','Exatas','Artes','Educação', 'Sociais e Humanas']); //parametros que passam pra view + consulta
 
         return $this->twig->render($this->getView(), $this->getContext());
     }
@@ -37,10 +35,9 @@ class CursoController extends Controller
         $id = Request::getParam('id');
         $this->setView('curso/edit.html');
 
-        $this->addToView('departamentos', ['Informática']); //parametros que passam pra view + consulta
+        $this->addToView('departamentos', ['Informática', 'Saúde','Engenharia','Rurais','Exatas','Artes','Educação', 'Sociais e Humanas']); //parametros que passam pra view + consulta
         $curso = new Curso();
         $curso->id = $id;
-
         $this->addToView('curso', $this->dao->get($curso));
 
         return $this->twig->render($this->getView(), $this->getContext());
