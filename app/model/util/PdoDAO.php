@@ -300,8 +300,9 @@ class PdoDAO extends ModelRegister implements DAO
 
 
         foreach ($data as $key => $d) {
-            foreach ($this->getAllBy($disciplina) as $key => $disciplina) {
-                $data[$key]->disciplinas[$key] = ['nome' => $disciplina->nome, 'codigo' => $disciplina->codigo, 'objetivos' => $disciplina->programa, 'programa' => $disciplina->programa, 'bibliografia' => $disciplina->bibliografia];
+
+            foreach ($this->getAllBy($disciplina, ['curso_id' => $d->id]) as $k => $disciplina) {
+                $data[$key]->disciplinas[$k] = ['nome' => $disciplina->nome, 'codigo' => $disciplina->codigo, 'objetivos' => $disciplina->programa, 'programa' => $disciplina->programa, 'bibliografia' => $disciplina->bibliografia];
             }
         }
 
